@@ -1,0 +1,13 @@
+{% extends 'org_base.html' %}
+{% block custom_title %}Organization description{% endblock %}
+{% block page_title_path %}Organization description{% endblock %}
+{% block right_form %}
+<div class="right companycenter layout" >
+        <div class="head">
+            <h1>Organization description</h1>
+        </div>
+        <div class="des">
+            <p>{{ course_org.desc }}</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+	<meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<title>{% block title %}Geek online Education{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    {% block custom_css %}{% endblock %}
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
+</head>
+<body>
+<section class="headerwrap ">
+    <header>
+		<div  class=" header">
+ 			<div class="top">
+				<div class="wp">
+					<div class="fl"><p>Contact：<b>yujia.lian001@gmail.com</b></p></div>
+					<!--登录后跳转-->
+                        {% if request.user.is_authenticated %}
+                            <div class="personal">
+                            <dl class="user fr">
+                                <dd>{{ user.username }}<img class="down fr" src="{% static 'images/top_down.png' %}"/></dd>
+                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+                            </dl>
+                            <div class="userdetail">
+                            	<dl>
+	                                <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
+	                                <dd>
+	                                    <h2>{{ request.user.nick_name }}</h2>
+	                                    <p>{{ request.user.username }}</p>
+	                                </dd>
+                                </dl>
+                                <div class="btn">
+	                                <a class="personcenter fl" href="{% url 'users:user_info' %}">Go to user center</a>
+	                                <a class="fr" href="{% url 'logout' %}">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                            <a href="{% url 'users:mymessage' %}">
+                                <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
+                            </a>
+                        {% else %}
+                            <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">Register</a>
+                            <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">Login</a>
+                        {% endif %}
+				</div>
+			</div>
+
+            <div class="middle">
+                <div class="wp">
+                    <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>
+                    <div class="searchbox fr">
+                        <div class="selectContainer fl">
+                            <span class="selectOption" id="jsSelectOption" data-value="course">
+                                Courses
+                            </span>
+                            <ul class="selectMenu" id="jsSelectMenu">
+                                <li data-value="course">Courses</li>
+                                <li data-value="org">Organizations</li>
+                                <li data-value="teacher">Teachers</li>
+                            </ul>
+                        </div>
+                        <input id="search_keywords" class="fl" type="text" value="" placeholder="Please enter keywords"/>
+                        <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>
+                    </div>
+                </div>
+            </div>
+
+
+			<nav>
+				<div class="nav">
+					<div class="wp">
+						<ul>
+							<li {% if request.path == '/' %}class="active"{% endif %}><a href="{% url 'index' %}">Main page</a></li>
+							<li {% if request.path|slice:'7' == '/course' %}class="active"{% endif %}>
+								<a href="{% url 'course:course_list' %}">
+									Courses<img class="hot" src="{% static 'images/nav_hot.png' %}">
+								</a>
+							</li>
+							<li {% if request.path|slice:'12' == '/org/teacher' %}class="active"{% endif %}>
+								<a href="{% url 'org:teacher_list' %}">Teachers</a>
+							</li>
+							<li {% if request.path|slice:'9' == '/org/list' %}class="active"{% endif %} ><a href="{% url 'org:org_list' %}">Organizations</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			</div>
+    </header>
+</section>
+<!--crumbs start-->
+{% block custom_bread %}
+<section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">Main page</a>></li>
+                <li>Organization</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+{% endblock %}
+<footer>
+		<div class="footer">
+			<div class="wp">
+				<ul class="cont">
+					<li class="logo"><a href=""><img src="{% static 'images/footlogo.png' %}"/></a></li>
+					<li class="third"><img class="fl" src="{% static 'images/tell.png' %}"/><p class="tell">3042169199</p><p class="time">Monday to friday 9:00-18:00</p></li>
+				</ul>
+
+			</div>
+			<p class="line"></p>
+			<div class="wp clear">
+                <span class="fl">2017 Geek online education all rights reserved</span>
+                <span class="fr">Developer: yujia.lian001@gmail.com</span>
+			</div>
+		</div>
+	</footer>
+<section>
+
+</section>
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/deco-common.js' %}" type='text/javascript'></script>
+<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}"  type="text/javascript"></script>
+{% block custom_js %}{% endblock %}
+</body>
+</html>

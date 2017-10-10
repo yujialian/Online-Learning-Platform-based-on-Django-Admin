@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Teacher list - Geek online education{% endblock %}
+{% load staticfiles %}
+{% block custom_bread %}
+<section>
+        <div class="wp">
+            <ul  class="crumbs">
+                <li><a href="{% url 'index' %}">Main page</a>></li>
+                <li>Teacher list</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+{% block content %}
+    <div class="wp butler_list_box list">
+	<div class='left'>
+		<div class="butler_list layout">
+			<div class="head">
+				<ul class="fl tab_header">
+					<li {% if sort == '' %}class="active"{% endif %}><a href="?sort=">All</a> </li>
+					<li {% if sort == 'hot' %}class="active"{% endif %} ><a href="?sort=hot">Popular &#8595;</a></li>
+				</ul>
+                <div class="fr butler-num">Total <span class="key">{{ total_teachers }}</span> teachers&nbsp;&nbsp;&nbsp;</div>
+			</div>
+                {% for teacher in all_teachers.object_list %}
+                    <dl class="des">
+					<dt>
+						<a href="{% url 'org:teacher_detail' teacher.id %}">
+                            <div class="picpic">
+                                <img width="100" height="100" class="scrollLoading" src="{{ MEDIA_URL }}{{ teacher.image }}"/>
+                            </div>
+                        </a>
+						<div class="btn">
+							<div class="fr btn2 bdsharebuttonbox"
+                                 data-text=""
+                                 data-desc=""
+                                 data-comment=""
+                                 >
+                                <span class="fl">Share</span>
+                                <a href="#" class="bds_more" data-cmd="more"></a>
+                            </div>
+						</div>
+					</dt>
+					<dd>
+						<a href="{% url 'org:teacher_detail' teacher.id %}">
+                            <h1>{{ teacher.name }}<span class="key picbig">Professor</span></h1>
+                        </a>
+						<ul class="cont">
+							<li>Experience：<span>{{ teacher.work_years }}&nbsp;years</span></li>
+							<li>Position：<span>{{ teacher.work_position }}</span></li>
+							<li>Work place：<span>{{ teacher.work_company }}&nbsp;</span></li>
+							<li>Style：<span>{{ teacher.points }}</span></li>
+						</ul>
+					</dd>
+                    <a class="buy buyservice" href="{% url 'org:teacher_detail' teacher.id %}"><br/>Check<br/>detail</a>
+                </dl>
+                {% endfor %}
+
+
+		</div>
+        <div class="pageturn">
+            <ul class="pagelist">
+                    {% if all_teachers.has_previous %}
+                        <li class="long"><a href="?{{ all_teachers.previous_page_number.querystring }}">Previous page</a></li>
+                    {% endif %}
+                    {% for page in all_teachers.pages %}
+                        {% if page %}
+                            {% ifequal page all_teachers.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if all_teachers.has_next %}
+                        <li class="long"><a href="?{{ all_teachers.next_page_number.querystring }}">Next page</a></li>
+                    {% endif %}
+            </ul>
+
+        </div>
+	</div>
+	<div class="right layout">
+		<div class="head">Ranking</div>
+            {% for hot_teacher in sorted_teachers %}
+                <dl class="des">
+                <span class="num fl">{{ forloop.counter }}</span>
+                <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
+                    <dt>
+                        <img width="50" height="50" class="scrollLoading"  src="{{ MEDIA_URL }}{{ hot_teacher.image }}"/>
+                    </dt>
+                </a>
+                <dd>
+                    <a href="{% url 'org:teacher_detail' hot_teacher.id %}">
+                        <h1 title="aaa">{{ hot_teacher.name }}</h1>
+                    </a>
+                    <p>Experience：<span>{{ hot_teacher.work_years }} years</span></p>
+                </dd>
+            </dl>
+            {% endfor %}
+	</div>
+    </div>
+{% endblock %}
