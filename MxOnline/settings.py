@@ -159,10 +159,10 @@ STATIC_ROOT = '/static/'
 # EMAIL_FROM = 'swagrant.lian@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'swagrant.lian@gmail.com'
-EMAIL_HOST_PASSWORD = 'lyj8623656'
+EMAIL_HOST_USER = '*************'#Your email
+EMAIL_HOST_PASSWORD = '**********'#Your email password
 EMAIL_USE_TLS = True
-EMAIL_FROM = 'swagrant.lian@gmail.com'
+EMAIL_FROM = '************'#Your email password
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MEDIA_URL = '/media/'
